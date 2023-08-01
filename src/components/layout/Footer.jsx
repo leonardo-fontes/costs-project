@@ -2,7 +2,7 @@ import {FaFacebook, FaInstagram, FaLinkedin} from 'react-icons/fa'
 
 function Footer(props) {
     return (
-        <footer className='flex flex-col bg-[#333] justify-center items-center'>
+        <footer className='flex flex-col bg-[#333] justify-center items-center '>
             <ul className='flex gap-10 py-10'>
                 <li>
                     <FaFacebook className='text-3xl text-[#fff] hover:text-[#ffbb33] cursor-pointer duration-300'/>

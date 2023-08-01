@@ -1,6 +1,6 @@
 function Container(props) {
     return (
-        <div>
+        <div className="w-full h-[90vh] bg-[#eee] flex flex-col items-center justify-center">
             {props.children}
         </div>
         

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function Home() {
   return (
     <>
-      <section className="flex flex-col items-center justify-center bg-[#eee]">
+      <section className="flex flex-col items-center justify-center">
         <h1 className="text-5xl font-bold my-12">
           Bem vindo ao{" "}
           <span className="bg-[#222] text-[#ffbb33] px-2 ">Costs</span>
