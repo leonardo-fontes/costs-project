@@ -12,7 +12,7 @@ function Navbar(props) {
           <Link to="/">Home</Link>
         </li>
         <li className="hover:text-[#ffbb33] duration-300">
-          <Link to="/project">Projetos</Link>
+          <Link to="/projects">Projetos</Link>
         </li>
         <li className="hover:text-[#ffbb33] duration-300">
           <Link to="/company">Empresa</Link>
