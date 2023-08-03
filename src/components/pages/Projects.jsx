@@ -1,13 +1,32 @@
 import { useLocation } from "react-router-dom";
 import Message from "../layout/Message";
 import LinkButton from "../layout/LinkButton";
+import ProjectCard from "../project/ProjectCard";
+import { useState, useEffect } from "react";
 
 function Projects() {
+  const [projects, setProjects] = useState([]);
+
   const location = useLocation();
   let message = "";
   if (location.state) {
     message = location.state.message;
   }
+
+  useEffect(() => {
+    fetch("http://localhost:5000/projects", {
+      method: "GET",
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setProjects(data);
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div className="w-full flex flex-col container mx-auto ">
@@ -20,8 +39,17 @@ function Projects() {
         />
       </div>
       {message && <Message type="success" msg={message} />}
-      <div>
-        <p>projetos...</p>
+      <div className="grid grid-cols-5 gap-4">
+        {projects.length > 0 &&
+          projects.map((project) => (
+            <ProjectCard
+              name={project.name}
+              id={project.id}
+              budget={project.budget}
+              category={project.category.name}
+              key={project.id}
+            />
+          ))}
       </div>
     </div>
   );
