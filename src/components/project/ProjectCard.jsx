@@ -22,7 +22,7 @@ function ProjectCard({ id, name, budget, category, handleRemove }) {
         <span className={`${styles[category.toLowerCase()]}`}></span> {category}
       </p>
       <div className="mt-[1.2em] flex items-center gap-4">
-        <Link to="/" className={btnClass}>
+        <Link to={`/projects/${id}`} className={btnClass}>
           <BsPencil /> Editar
         </Link>
         <button className={btnClass} onClick={remove}>
