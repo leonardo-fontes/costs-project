@@ -23,7 +23,7 @@ function Message({ type, msg }) {
     <>
       {visible && (
         <div
-          className={`w-full border-solid border-[1px] p-[1em] mb-[2em] ${styles[type]}`}
+          className={`w-full border-solid border-[1px] p-[1em] my-[2em] ${styles[type]}`}
         >
           {msg}
         </div>

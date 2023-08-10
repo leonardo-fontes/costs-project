@@ -2,25 +2,14 @@
   "projects": [
     {
       "name": "bom dia",
-      "budget": "123",
+      "budget": "30003",
       "category": {
-        "id": "2",
-        "name": "Desenvolvimento"
+        "id": "3",
+        "name": "Design"
       },
       "cost": 0,
       "services": [],
       "id": 1
-    },
-    {
-      "name": "asdsadd",
-      "budget": "1222",
-      "category": {
-        "id": "2",
-        "name": "Desenvolvimento"
-      },
-      "cost": 0,
-      "services": [],
-      "id": 2
     }
   ],
   "categories": [
