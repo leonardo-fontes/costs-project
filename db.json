@@ -7,9 +7,39 @@
         "id": "3",
         "name": "Design"
       },
+      "cost": 157,
+      "services": [
+        {
+          "name": "asdasda",
+          "cost": "122",
+          "description": "as",
+          "id": "e320d557-18af-477c-bff2-55f737edce73"
+        },
+        {
+          "name": "bom ddddddd",
+          "cost": "12",
+          "description": "223",
+          "id": "c63f319e-3214-4044-9256-d54d38ca2301"
+        },
+        {
+          "name": "sdfsgsdfg",
+          "cost": "23",
+          "description": "123fdasf",
+          "id": "bf310ec6-f0f4-4bf2-ae82-656700960d6a"
+        }
+      ],
+      "id": 1
+    },
+    {
+      "name": "bom dianoite",
+      "budget": "123232",
+      "category": {
+        "id": "1",
+        "name": "Infra"
+      },
       "cost": 0,
       "services": [],
-      "id": 1
+      "id": 2
     }
   ],
   "categories": [

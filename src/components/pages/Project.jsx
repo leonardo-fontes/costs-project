@@ -1,6 +1,9 @@
+import { parse, v4 as uuidv4 } from "uuid";
 import Loading from "../layout/Loading";
+import ServiceCard from "../Service/ServiceCard";
 import Container from "../layout/Container";
 import ProjectForm from "../project/ProjectForm";
+import ServiceForm from "../Service/ServiceForm";
 import Message from "../layout/Message";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -9,9 +12,10 @@ function Project() {
   const { id } = useParams();
 
   const [project, setProject] = useState([]);
+  const [services, setServices] = useState([]);
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [showServiceForm, setShowServiceForm] = useState(false);
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState("");
   const [type, SetType] = useState();
 
   useEffect(() => {
@@ -23,10 +27,13 @@ function Project() {
         .then((resp) => resp.json())
         .then((data) => {
           setProject(data);
+          setServices(data.services);
         })
         .catch((err) => console.log(err));
     }, 1000);
   }, [id]);
+
+  function removeService() {}
 
   function toggleProjectForm() {
     setShowProjectForm(!showProjectForm);
@@ -36,14 +43,47 @@ function Project() {
     setShowServiceForm(!showServiceForm);
   }
 
+  function createService(project) {
+    setMessage("");
+    const lastService = project.services[project.services.length - 1];
+    lastService.id = uuidv4();
+
+    const lastServiceCost = lastService.cost;
+
+    const newCost = parseFloat(project.cost) + parseFloat(lastServiceCost);
+
+    if (newCost > parseFloat(project.budget)) {
+      setMessage("Orçamento ultrapassado, verifique o valor do serviço");
+      SetType("error");
+      project.services.pop();
+
+      return false;
+    }
+
+    project.cost = newCost;
+
+    fetch(`http://localhost:5000/projects/${project.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(project),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setShowServiceForm(false);
+      })
+      .catch((err) => console.log(err));
+  }
+
   function editPost(project) {
-    setMessage('')
+    setMessage("");
     if (project.budget < project.cost) {
       setMessage("O orçamento não pode ser menor que o custo do projeto!");
       SetType("error");
       return false;
     }
-    
+
     fetch(`http://localhost:5000/projects/${project.id}`, {
       method: "PATCH",
       headers: {
@@ -107,20 +147,39 @@ function Project() {
               )}
             </div>
             <div className="border-b-[1px] border-solid border-[#7a7a7a] flex flex-wrap justify-between items-center">
-                <h2 className="text-2xl font-bold">Adicione um serviço: </h2>
-                <button
+              <h2 className="text-2xl font-bold">Adicione um serviço: </h2>
+              <button
                 className="bg-[#222] text-[#fff] py-[0.5em] px-[1em] hover:text-[#FFBB33] duration-300 cursor-pointer max-h-[40px]"
                 onClick={toggleServiceForm}
               >
                 {!showServiceForm ? "Adicionar serviço" : "Fechar"}
               </button>
-              <div className="w-[100%] flex flex-col justify-center items-center mt-8">
-                {showServiceForm && <div>form</div> }
+              <div className="w-[100%] flex flex-col justify-center items-center my-4">
+                {showServiceForm && (
+                  <ServiceForm
+                    handleSubmit={createService}
+                    btnText="Adicionar serviço"
+                    projectData={project}
+                  />
+                )}
               </div>
             </div>
-            <h2>Serviços</h2>
-            <Container>
-              <p>itens de Serviços</p>
+            <h2 className="text-2xl font-bold p-4">Serviços</h2>
+            <Container className={"min-h-[50vh]"}>
+              <div className="grid grid-cols-5 gap-4">
+                {services.length > 0 &&
+                  services.map((service) => (
+                    <ServiceCard
+                      id={service.id}
+                      name={service.name}
+                      cost={service.cost}
+                      description={service.description}
+                      key={service.id}
+                      handleRemove={removeService}
+                    />
+                  ))}
+                {services.length == 0 && <p>Não há serviços cadastrados.</p>}
+              </div>
             </Container>
           </Container>
         </div>

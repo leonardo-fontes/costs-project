@@ -1,7 +1,7 @@
-function Container(props) {
+function Container({children, className}) {
     return (
-        <div className="w-full h-[90vh] bg-[#eee] flex flex-col  ">
-            {props.children}
+        <div className={`w-full min-h-[100vh] bg-[#eee] flex flex-col justify-between ${className}`}>
+            {children}
         </div>
         
     )
